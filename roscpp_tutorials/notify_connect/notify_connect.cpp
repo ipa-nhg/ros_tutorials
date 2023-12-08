@@ -53,7 +53,7 @@ void chatterDisconnect(const ros::SingleSubscriberPublisher&)
   ROS_INFO("chatter disconnect");
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "notify_connect");
   ros::NodeHandle n;
@@ -67,4 +67,3 @@ int main(int argc, char **argv)
 
   return 0;
 }
-

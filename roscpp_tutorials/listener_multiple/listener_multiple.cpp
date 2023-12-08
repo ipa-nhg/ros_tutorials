@@ -37,9 +37,18 @@
 class Listener
 {
 public:
-  void chatter1(const std_msgs::String::ConstPtr& msg) { ROS_INFO("chatter1: [%s]", msg->data.c_str()); }
-  void chatter2(const std_msgs::String::ConstPtr& msg) { ROS_INFO("chatter2: [%s]", msg->data.c_str()); }
-  void chatter3(const std_msgs::String::ConstPtr& msg) { ROS_INFO("chatter3: [%s]", msg->data.c_str()); }
+  void chatter1(const std_msgs::String::ConstPtr& msg)
+  {
+    ROS_INFO("chatter1: [%s]", msg->data.c_str());
+  }
+  void chatter2(const std_msgs::String::ConstPtr& msg)
+  {
+    ROS_INFO("chatter2: [%s]", msg->data.c_str());
+  }
+  void chatter3(const std_msgs::String::ConstPtr& msg)
+  {
+    ROS_INFO("chatter3: [%s]", msg->data.c_str());
+  }
 };
 
 void chatter4(const std_msgs::String::ConstPtr& msg)
@@ -47,7 +56,7 @@ void chatter4(const std_msgs::String::ConstPtr& msg)
   ROS_INFO("chatter4: [%s]", msg->data.c_str());
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "listener");
   ros::NodeHandle n;
@@ -62,4 +71,3 @@ int main(int argc, char **argv)
 
   return 0;
 }
-

@@ -63,7 +63,7 @@ void chatter4(const std_msgs::String::ConstPtr& msg)
   d.sleep();
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "listener");
   ros::NodeHandle n;
@@ -83,12 +83,10 @@ int main(int argc, char **argv)
   s.start();
 
   ros::Rate r(5);
-  while (ros::ok())
-  {
+  while (ros::ok()) {
     ROS_INFO_STREAM("Main thread [" << boost::this_thread::get_id() << "].");
     r.sleep();
   }
 
   return 0;
 }
-

@@ -36,10 +36,9 @@
 ## Extended version of add_two_int_client that shows how to use
 ## connection header to pass in metadata to service.
 
-from __future__ import print_function
 
-PKG = 'rospy_tutorials'
-NAME = 'test_server_connection_header'
+PKG = "rospy_tutorials"
+NAME = "test_server_connection_header"
 
 import sys
 import time
@@ -49,25 +48,26 @@ from rospy_tutorials.srv import AddTwoInts, AddTwoIntsResponse
 import rospy
 import rostest
 
+
 class TestServerConnectionHeader(unittest.TestCase):
     def __init__(self, *args):
-        super(TestServerConnectionHeader, self).__init__(*args)
+        super().__init__(*args)
         self.success = False
         rospy.init_node(NAME, anonymous=True)
-        s = rospy.Service('add_two_ints_header_test', AddTwoInts, self.handle_request)        
-        
+        s = rospy.Service("add_two_ints_header_test", AddTwoInts, self.handle_request)
+
     def handle_request(self, req):
-        if 'cookies' in req._connection_header:
-            print("GOT", req._connection_header['cookies'])
-            self.success = req._connection_header['cookies'] == 'peanut butter'
+        if "cookies" in req._connection_header:
+            print("GOT", req._connection_header["cookies"])
+            self.success = req._connection_header["cookies"] == "peanut butter"
         return AddTwoIntsResponse(3)
 
     def test_header(self):
-        timeout_t = time.time() + 10.0*1000 #10 seconds
+        timeout_t = time.time() + 10.0 * 1000  # 10 seconds
         while not rospy.is_shutdown() and not self.success and time.time() < timeout_t:
             time.sleep(0.1)
         self.assert_(self.success, str(self.success))
-        
-if __name__ == '__main__':
-    rostest.rosrun(PKG, NAME, TestServerConnectionHeader, sys.argv)
 
+
+if __name__ == "__main__":
+    rostest.rosrun(PKG, NAME, TestServerConnectionHeader, sys.argv)

@@ -44,11 +44,11 @@ def publish_callback(event):
     pub.publish(hello_str)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
-        rospy.init_node('talker', anonymous=True)
-        pub = rospy.Publisher('chatter', String, queue_size=10)
-        timer = rospy.Timer(rospy.Duration(1. / 10), publish_callback)  # 10Hz
+        rospy.init_node("talker", anonymous=True)
+        pub = rospy.Publisher("chatter", String, queue_size=10)
+        timer = rospy.Timer(rospy.Duration(1.0 / 10), publish_callback)  # 10Hz
         rospy.spin()
     except rospy.ROSInterruptException:
         pass

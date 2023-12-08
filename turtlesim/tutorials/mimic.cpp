@@ -9,7 +9,7 @@ public:
   {
     twist_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("output/cmd_vel", 1);
     pose_sub_ = this->create_subscription<turtlesim::msg::Pose>(
-      "input/pose", 1, std::bind(&MimicNode::poseCallback, this, std::placeholders::_1));
+        "input/pose", 1, std::bind(&MimicNode::poseCallback, this, std::placeholders::_1));
   }
 
 private:
@@ -30,4 +30,3 @@ int main(int argc, char** argv)
   rclcpp::init(argc, argv);
   rclcpp::spin(std::make_shared<MimicNode>());
 }
-

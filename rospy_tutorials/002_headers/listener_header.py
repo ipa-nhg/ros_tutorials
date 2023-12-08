@@ -34,9 +34,9 @@
 # Revision $Id: gossipbot 3529 2009-01-23 22:35:53Z sfkwc $
 
 ## listener_header listens to HeaderString messages published
-## to the 'chatter_header' topic. 
+## to the 'chatter_header' topic.
 
-import sys 
+import sys
 
 import rospy
 from rospy_tutorials.msg import HeaderString
@@ -48,12 +48,12 @@ def callback(data):
     header = data.header
     timestamp = header.stamp.to_sec()
     print rospy.get_caller_id(), header.seq, "I just heard that %s at %12f"%(chatter, timestamp)
-    
+
 def listener_header():
     rospy.Subscriber("chatter_header", HeaderString, callback)
     rospy.init_node(NAME, anonymous=True)
     rospy.spin()
-        
+
 if __name__ == '__main__':
     try:
         listener_header()

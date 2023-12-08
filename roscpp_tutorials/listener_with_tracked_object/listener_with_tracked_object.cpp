@@ -49,7 +49,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
   ROS_INFO("Only this version should print: [%s]", msg->data.c_str());
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "listener");
   ros::NodeHandle n;

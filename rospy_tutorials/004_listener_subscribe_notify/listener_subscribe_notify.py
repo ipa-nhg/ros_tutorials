@@ -35,41 +35,45 @@
 
 ## talker that receives notification of new subscriptions
 
-NAME = 'talker_callback'
+NAME = "talker_callback"
 
 import sys
 
 import rospy
 from std_msgs.msg import String
 
+
 class ChatterListener(rospy.SubscribeListener):
     def peer_subscribe(self, topic_name, topic_publish, peer_publish):
         print("a peer subscribed to topic [%s]" % topic_name)
-        
+
         str = "Hey everyone, we have a new friend!"
         print(str)
         topic_publish(String(str))
-        str = "greetings. welcome to topic "+topic_name
+        str = "greetings. welcome to topic " + topic_name
         print(str)
         peer_publish(String(str))
-        
+
     def peer_unsubscribe(self, topic_name, numPeers):
         print("a peer unsubscribed from topic [%s]" % topic_name)
         if numPeers == 0:
             print("I have no friends")
-    
+
+
 def talker_callback():
     pub = rospy.Publisher("chatter", String, subscriber_listener=ChatterListener(), queue_size=10)
     rospy.init_node(NAME, anonymous=True)
     count = 0
     while not rospy.is_shutdown():
-        str = "hello world %d"%count
+        str = "hello world %d" % count
         print(str)
         pub.publish(String(str))
         count += 1
         rospy.sleep(0.1)
-        
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     try:
         talker_callback()
-    except rospy.ROSInterruptException: pass
+    except rospy.ROSInterruptException:
+        pass

@@ -29,10 +29,11 @@
 #include "std_msgs/String.h"
 
 /**
- * This tutorial demonstrates simplified syntax for receiving a single message on a topic.  This is generally only useful for latched topics, as the overhead of subscribing to a topic is relatively significant
+ * This tutorial demonstrates simplified syntax for receiving a single message on a topic.  This is generally only
+ * useful for latched topics, as the overhead of subscribing to a topic is relatively significant
  */
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   /**
    * The ros::init() function needs to see argc and argv so that it can perform

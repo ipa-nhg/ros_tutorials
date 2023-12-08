@@ -58,7 +58,7 @@ def talker():
 
         # print the number of subscribers
         rospy.loginfo("I have %s subscribers"%pub.get_num_connections())
-        
+
 if __name__ == '__main__':
     try:
         talker()

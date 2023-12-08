@@ -38,7 +38,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
   ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
    * The ros::TransportHints object is use to hint to the advertiser that
    * an unreliable transport would be preferred.
    */
-  
+
   ros::Subscriber sub = n.subscribe("chatter", 1000, chatterCallback, ros::TransportHints().unreliable());
 
   /**

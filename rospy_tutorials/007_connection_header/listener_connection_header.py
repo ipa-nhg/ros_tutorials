@@ -36,7 +36,7 @@
 ## listener_connection_header looks at the connection header
 ## from the received message to determine who it is talking to.
 
-import sys 
+import sys
 
 import rospy
 from std_msgs.msg import String
@@ -53,12 +53,12 @@ def callback(data):
         print "%s just offered me %s cookies"%(who, data._connection_header['cookies'])
     else:
         print "I just heard %s from %s"%(chatter, who)
-    
+
 def listener_header():
     rospy.Subscriber("chatter", String, callback)
     rospy.init_node(NAME, anonymous=True)
     rospy.spin()
-        
+
 if __name__ == '__main__':
     try:
         listener_header()

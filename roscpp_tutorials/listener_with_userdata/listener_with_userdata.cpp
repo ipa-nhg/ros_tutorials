@@ -34,23 +34,24 @@
  * http://www.boost.org/
  */
 
-
 class Listener
 {
 public:
   ros::NodeHandle node_handle_;
   ros::V_Subscriber subs_;
 
-  Listener(const ros::NodeHandle& node_handle)
-  : node_handle_(node_handle)
+  Listener(const ros::NodeHandle& node_handle) : node_handle_(node_handle)
   {
   }
 
   void init()
   {
-    subs_.push_back(node_handle_.subscribe<std_msgs::String>("chatter", 1000, boost::bind(&Listener::chatterCallback, this, _1, "User 1")));
-    subs_.push_back(node_handle_.subscribe<std_msgs::String>("chatter", 1000, boost::bind(&Listener::chatterCallback, this, _1, "User 2")));
-    subs_.push_back(node_handle_.subscribe<std_msgs::String>("chatter", 1000, boost::bind(&Listener::chatterCallback, this, _1, "User 3")));
+    subs_.push_back(node_handle_.subscribe<std_msgs::String>(
+        "chatter", 1000, boost::bind(&Listener::chatterCallback, this, _1, "User 1")));
+    subs_.push_back(node_handle_.subscribe<std_msgs::String>(
+        "chatter", 1000, boost::bind(&Listener::chatterCallback, this, _1, "User 2")));
+    subs_.push_back(node_handle_.subscribe<std_msgs::String>(
+        "chatter", 1000, boost::bind(&Listener::chatterCallback, this, _1, "User 3")));
   }
 
   void chatterCallback(const std_msgs::String::ConstPtr& msg, std::string user_string)
@@ -59,7 +60,7 @@ public:
   }
 };
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "listener_with_userdata");
   ros::NodeHandle n;

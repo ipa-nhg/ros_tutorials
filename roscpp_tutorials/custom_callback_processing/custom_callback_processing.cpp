@@ -61,13 +61,12 @@ void callbackThread()
   ROS_INFO_STREAM("Callback thread id=" << boost::this_thread::get_id());
 
   ros::NodeHandle n;
-  while (n.ok())
-  {
+  while (n.ok()) {
     g_queue.callAvailable(ros::WallDuration(0.01));
   }
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "listener_with_custom_callback_processing");
   ros::NodeHandle n;
@@ -78,9 +77,8 @@ int main(int argc, char **argv)
    *
    * AdvertiseOptions and AdvertiseServiceOptions offer similar functionality.
    */
-  ros::SubscribeOptions ops = ros::SubscribeOptions::create<std_msgs::String>("chatter", 1000,
-                                                                              chatterCallbackCustomQueue,
-                                                                              ros::VoidPtr(), &g_queue);
+  ros::SubscribeOptions ops = ros::SubscribeOptions::create<std_msgs::String>(
+      "chatter", 1000, chatterCallbackCustomQueue, ros::VoidPtr(), &g_queue);
   ros::Subscriber sub = n.subscribe(ops);
 
   /**
@@ -98,8 +96,7 @@ int main(int argc, char **argv)
    * Now do a custom spin, to demonstrate the difference.
    */
   ros::Rate r(1);
-  while (n.ok())
-  {
+  while (n.ok()) {
     ros::spinOnce();
     r.sleep();
   }

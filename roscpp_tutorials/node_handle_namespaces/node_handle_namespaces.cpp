@@ -32,7 +32,7 @@
  * This tutorial shows the use of NodeHandle namespaces.
  */
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "node_handle_namespaces");
 

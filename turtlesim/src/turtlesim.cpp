@@ -38,8 +38,7 @@ class TurtleApp : public QApplication
 public:
   rclcpp::Node::SharedPtr nh_;
 
-  explicit TurtleApp(int& argc, char** argv)
-    : QApplication(argc, argv)
+  explicit TurtleApp(int& argc, char** argv) : QApplication(argc, argv)
   {
     rclcpp::init(argc, argv);
     nh_ = rclcpp::Node::make_shared("turtlesim");
@@ -64,4 +63,3 @@ int main(int argc, char** argv)
   TurtleApp app(argc, argv);
   return app.exec();
 }
-

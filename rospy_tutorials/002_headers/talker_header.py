@@ -56,7 +56,6 @@ def talker_header():
         pub.publish(HeaderString(None, str))
         count += 1
         rospy.sleep(0.1)
-    
+
 if __name__ == '__main__':
     talker_header()
-

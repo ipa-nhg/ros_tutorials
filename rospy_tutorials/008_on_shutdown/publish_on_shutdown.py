@@ -44,7 +44,7 @@ pub = None
 def talker_shutdown():
     print "I'm dead!"
     pub.publish("I'm dead!")
-    
+
 def talker():
     global pub
     pub = rospy.Publisher('chatter', String, queue_size=10)
@@ -56,6 +56,6 @@ def talker():
 
     # spin() blocks until the node shuts down
     rospy.spin()
-        
+
 if __name__ == '__main__':
     talker()

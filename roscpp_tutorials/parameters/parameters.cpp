@@ -33,62 +33,55 @@ int main(int argc, char** argv)
   ros::NodeHandle n;
 
   {
-// %Tag(NH_GETPARAM_SIMPLE)%
+    // %Tag(NH_GETPARAM_SIMPLE)%
     std::string s;
     n.getParam("my_param", s);
-// %EndTag(NH_GETPARAM_SIMPLE)%
+    // %EndTag(NH_GETPARAM_SIMPLE)%
   }
 
   {
-// %Tag(NH_GETPARAM_CHECK_RETURN)%
+    // %Tag(NH_GETPARAM_CHECK_RETURN)%
     std::string s;
-    if (n.getParam("my_param", s))
-    {
+    if (n.getParam("my_param", s)) {
       ROS_INFO("Got param: %s", s.c_str());
-    }
-    else
-    {
+    } else {
       ROS_ERROR("Failed to get param 'my_param'");
     }
-// %EndTag(NH_GETPARAM_CHECK_RETURN)%
+    // %EndTag(NH_GETPARAM_CHECK_RETURN)%
   }
 
-// %Tag(NH_PARAM_INT)%
+  // %Tag(NH_PARAM_INT)%
   int i;
   n.param("my_num", i, 42);
-// %EndTag(NH_PARAM_INT)%
+  // %EndTag(NH_PARAM_INT)%
 
-// %Tag(NH_PARAM_STRING)%
+  // %Tag(NH_PARAM_STRING)%
   std::string s;
   n.param<std::string>("my_param", s, "default_value");
-// %EndTag(NH_PARAM_STRING)%
+  // %EndTag(NH_PARAM_STRING)%
 
-// %Tag(NH_SETPARAM)%
+  // %Tag(NH_SETPARAM)%
   n.setParam("my_param", "hello there");
-// %EndTag(NH_SETPARAM)%
+  // %EndTag(NH_SETPARAM)%
 
-// %Tag(NH_DELETEPARAM)%
+  // %Tag(NH_DELETEPARAM)%
   n.deleteParam("my_param");
-// %EndTag(NH_DELETEPARAM)%
+  // %EndTag(NH_DELETEPARAM)%
 
-// %Tag(NH_HASPARAM)%
-  if (!n.hasParam("my_param"))
-  {
+  // %Tag(NH_HASPARAM)%
+  if (!n.hasParam("my_param")) {
     ROS_INFO("No param named 'my_param'");
   }
-// %EndTag(NH_HASPARAM)%
+  // %EndTag(NH_HASPARAM)%
 
-// %Tag(NH_SEARCHPARAM)%
+  // %Tag(NH_SEARCHPARAM)%
   std::string param_name;
-  if (n.searchParam("b", param_name))
-  {
+  if (n.searchParam("b", param_name)) {
     // Found parameter, can now query it using param_name
     int i = 0;
     n.getParam(param_name, i);
-  }
-  else
-  {
+  } else {
     ROS_INFO("No param 'b' found in an upward search");
   }
-// %EndTag(NH_SEARCHPARAM)%
+  // %EndTag(NH_SEARCHPARAM)%
 }

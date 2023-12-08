@@ -42,11 +42,11 @@ namespace turtlesim
 {
 
 TurtleFrame::TurtleFrame(rclcpp::Node::SharedPtr& node_handle, QWidget* parent, Qt::WindowFlags f)
-: QFrame(parent, f)
-, path_image_(500, 500, QImage::Format_ARGB32)
-, path_painter_(&path_image_)
-, frame_count_(0)
-, id_counter_(0)
+  : QFrame(parent, f)
+  , path_image_(500, 500, QImage::Format_ARGB32)
+  , path_painter_(&path_image_)
+  , frame_count_(0)
+  , id_counter_(0)
 {
   setFixedSize(500, 500);
   setWindowTitle("TurtleSim");
@@ -89,8 +89,7 @@ TurtleFrame::TurtleFrame(rclcpp::Node::SharedPtr& node_handle, QWidget* parent, 
   turtles.append("rolling.png");
 
   QString images_path = (ament_index_cpp::get_package_share_directory("turtlesim") + "/images/").c_str();
-  for (int i = 0; i < turtles.size(); ++i)
-  {
+  for (int i = 0; i < turtles.size(); ++i) {
     QImage img;
     img.load(images_path + turtles[i]);
     turtle_images_.append(img);
@@ -100,14 +99,18 @@ TurtleFrame::TurtleFrame(rclcpp::Node::SharedPtr& node_handle, QWidget* parent, 
 
   clear();
 
-  clear_srv_ = nh_->create_service<std_srvs::srv::Empty>("clear", std::bind(&TurtleFrame::clearCallback, this, std::placeholders::_1, std::placeholders::_2));
-  reset_srv_ = nh_->create_service<std_srvs::srv::Empty>("reset", std::bind(&TurtleFrame::resetCallback, this, std::placeholders::_1, std::placeholders::_2));
-  spawn_srv_ = nh_->create_service<turtlesim::srv::Spawn>("spawn", std::bind(&TurtleFrame::spawnCallback, this, std::placeholders::_1, std::placeholders::_2));
-  kill_srv_ = nh_->create_service<turtlesim::srv::Kill>("kill", std::bind(&TurtleFrame::killCallback, this, std::placeholders::_1, std::placeholders::_2));
+  clear_srv_ = nh_->create_service<std_srvs::srv::Empty>(
+      "clear", std::bind(&TurtleFrame::clearCallback, this, std::placeholders::_1, std::placeholders::_2));
+  reset_srv_ = nh_->create_service<std_srvs::srv::Empty>(
+      "reset", std::bind(&TurtleFrame::resetCallback, this, std::placeholders::_1, std::placeholders::_2));
+  spawn_srv_ = nh_->create_service<turtlesim::srv::Spawn>(
+      "spawn", std::bind(&TurtleFrame::spawnCallback, this, std::placeholders::_1, std::placeholders::_2));
+  kill_srv_ = nh_->create_service<turtlesim::srv::Kill>(
+      "kill", std::bind(&TurtleFrame::killCallback, this, std::placeholders::_1, std::placeholders::_2));
 
   rclcpp::QoS qos(rclcpp::KeepLast(100), rmw_qos_profile_sensor_data);
   parameter_event_sub_ = nh_->create_subscription<rcl_interfaces::msg::ParameterEvent>(
-    "/parameter_events", qos, std::bind(&TurtleFrame::parameterEventCallback, this, std::placeholders::_1));
+      "/parameter_events", qos, std::bind(&TurtleFrame::parameterEventCallback, this, std::placeholders::_1));
 
   RCLCPP_INFO(nh_->get_logger(), "Starting turtlesim with node name %s", nh_->get_fully_qualified_name());
 
@@ -116,14 +119,13 @@ TurtleFrame::TurtleFrame(rclcpp::Node::SharedPtr& node_handle, QWidget* parent, 
   spawnTurtle("", width_in_meters_ / 2.0, height_in_meters_ / 2.0, 0);
 
   // spawn all available turtle types
-  if(false)
-  {
-    for(int index = 0; index < turtles.size(); ++index)
-    {
+  if (false) {
+    for (int index = 0; index < turtles.size(); ++index) {
       QString name = turtles[index];
       name = name.split(".").first();
       name.replace(QString("-"), QString(""));
-      spawnTurtle(name.toStdString(), 1.0f + 1.5f * (index % 7), 1.0f + 1.5f * (index / 7), static_cast<float>(PI) / 2.0f, index);
+      spawnTurtle(name.toStdString(), 1.0f + 1.5f * (index % 7), 1.0f + 1.5f * (index / 7),
+                  static_cast<float>(PI) / 2.0f, index);
     }
   }
 }
@@ -133,11 +135,11 @@ TurtleFrame::~TurtleFrame()
   delete update_timer_;
 }
 
-bool TurtleFrame::spawnCallback(const turtlesim::srv::Spawn::Request::SharedPtr req, turtlesim::srv::Spawn::Response::SharedPtr res)
+bool TurtleFrame::spawnCallback(const turtlesim::srv::Spawn::Request::SharedPtr req,
+                                turtlesim::srv::Spawn::Response::SharedPtr res)
 {
   std::string name = spawnTurtle(req->name, req->x, req->y, req->theta);
-  if (name.empty())
-  {
+  if (name.empty()) {
     RCLCPP_ERROR(nh_->get_logger(), "A turtle named [%s] already exists", req->name.c_str());
     return false;
   }
@@ -147,11 +149,11 @@ bool TurtleFrame::spawnCallback(const turtlesim::srv::Spawn::Request::SharedPtr 
   return true;
 }
 
-bool TurtleFrame::killCallback(const turtlesim::srv::Kill::Request::SharedPtr req, turtlesim::srv::Kill::Response::SharedPtr)
+bool TurtleFrame::killCallback(const turtlesim::srv::Kill::Request::SharedPtr req,
+                               turtlesim::srv::Kill::Response::SharedPtr)
 {
   M_Turtle::iterator it = turtles_.find(req->name);
-  if (it == turtles_.end())
-  {
+  if (it == turtles_.end()) {
     RCLCPP_ERROR(nh_->get_logger(), "Tried to kill turtle [%s], which does not exist", req->name.c_str());
     return false;
   }
@@ -165,8 +167,7 @@ bool TurtleFrame::killCallback(const turtlesim::srv::Kill::Request::SharedPtr re
 void TurtleFrame::parameterEventCallback(const rcl_interfaces::msg::ParameterEvent::ConstSharedPtr event)
 {
   // only consider events from this node
-  if (event->node == nh_->get_fully_qualified_name())
-  {
+  if (event->node == nh_->get_fully_qualified_name()) {
     // since parameter events for this event aren't expected frequently just always call update()
     update();
   }
@@ -185,24 +186,20 @@ std::string TurtleFrame::spawnTurtle(const std::string& name, float x, float y, 
 std::string TurtleFrame::spawnTurtle(const std::string& name, float x, float y, float angle, size_t index)
 {
   std::string real_name = name;
-  if (real_name.empty())
-  {
-    do
-    {
+  if (real_name.empty()) {
+    do {
       std::stringstream ss;
       ss << "turtle" << ++id_counter_;
       real_name = ss.str();
     } while (hasTurtle(real_name));
-  }
-  else
-  {
-    if (hasTurtle(real_name))
-    {
+  } else {
+    if (hasTurtle(real_name)) {
       return "";
     }
   }
 
-  TurtlePtr t = std::make_shared<Turtle>(nh_, real_name, turtle_images_[static_cast<int>(index)], QPointF(x, height_in_meters_ - y), angle);
+  TurtlePtr t = std::make_shared<Turtle>(nh_, real_name, turtle_images_[static_cast<int>(index)],
+                                         QPointF(x, height_in_meters_ - y), angle);
   turtles_[real_name] = t;
   update();
 
@@ -220,8 +217,7 @@ void TurtleFrame::clear()
 
 void TurtleFrame::onUpdate()
 {
-  if (!rclcpp::ok())
-  {
+  if (!rclcpp::ok()) {
     close();
     return;
   }
@@ -248,16 +244,14 @@ void TurtleFrame::paintEvent(QPaintEvent*)
 
   M_Turtle::iterator it = turtles_.begin();
   M_Turtle::iterator end = turtles_.end();
-  for (; it != end; ++it)
-  {
+  for (; it != end; ++it) {
     it->second->paint(painter);
   }
 }
 
 void TurtleFrame::updateTurtles()
 {
-  if (last_turtle_update_.nanoseconds() == 0)
-  {
+  if (last_turtle_update_.nanoseconds() == 0) {
     last_turtle_update_ = nh_->now();
     return;
   }
@@ -265,27 +259,27 @@ void TurtleFrame::updateTurtles()
   bool modified = false;
   M_Turtle::iterator it = turtles_.begin();
   M_Turtle::iterator end = turtles_.end();
-  for (; it != end; ++it)
-  {
-    modified |= it->second->update(0.001 * update_timer_->interval(), path_painter_, path_image_, width_in_meters_, height_in_meters_);
+  for (; it != end; ++it) {
+    modified |= it->second->update(0.001 * update_timer_->interval(), path_painter_, path_image_, width_in_meters_,
+                                   height_in_meters_);
   }
-  if (modified)
-  {
+  if (modified) {
     update();
   }
 
   ++frame_count_;
 }
 
-
-bool TurtleFrame::clearCallback(const std_srvs::srv::Empty::Request::SharedPtr, std_srvs::srv::Empty::Response::SharedPtr)
+bool TurtleFrame::clearCallback(const std_srvs::srv::Empty::Request::SharedPtr,
+                                std_srvs::srv::Empty::Response::SharedPtr)
 {
   RCLCPP_INFO(nh_->get_logger(), "Clearing turtlesim.");
   clear();
   return true;
 }
 
-bool TurtleFrame::resetCallback(const std_srvs::srv::Empty::Request::SharedPtr, std_srvs::srv::Empty::Response::SharedPtr)
+bool TurtleFrame::resetCallback(const std_srvs::srv::Empty::Request::SharedPtr,
+                                std_srvs::srv::Empty::Response::SharedPtr)
 {
   RCLCPP_INFO(nh_->get_logger(), "Resetting turtlesim.");
   turtles_.clear();
@@ -295,4 +289,4 @@ bool TurtleFrame::resetCallback(const std_srvs::srv::Empty::Request::SharedPtr, 
   return true;
 }
 
-}
+}  // namespace turtlesim

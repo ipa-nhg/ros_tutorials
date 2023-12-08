@@ -36,16 +36,16 @@
 
 // This prevents a MOC error with versions of boost >= 1.48
 #ifndef Q_MOC_RUN  // See: https://bugreports.qt-project.org/browse/QTBUG-22829
-# include <rclcpp/rclcpp.hpp>
-# include <ament_index_cpp/get_package_share_directory.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <ament_index_cpp/get_package_share_directory.hpp>
 
-# include <rcl_interfaces/msg/parameter_event.hpp>
-# include <std_srvs/srv/empty.hpp>
-# include <turtlesim/srv/spawn.hpp>
-# include <turtlesim/srv/kill.hpp>
-# include <map>
+#include <rcl_interfaces/msg/parameter_event.hpp>
+#include <std_srvs/srv/empty.hpp>
+#include <turtlesim/srv/spawn.hpp>
+#include <turtlesim/srv/kill.hpp>
+#include <map>
 
-# include "turtle.h"
+#include "turtle.h"
 #endif
 
 namespace turtlesim
@@ -106,4 +106,4 @@ private:
   float height_in_meters_;
 };
 
-}
+}  // namespace turtlesim

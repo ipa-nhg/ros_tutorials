@@ -45,15 +45,15 @@ void Listener::callback(const std_msgs::String::ConstPtr& msg)
   ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "listener_class");
   ros::NodeHandle n;
 
-// %Tag(SUBSCRIBER)%
+  // %Tag(SUBSCRIBER)%
   Listener listener;
   ros::Subscriber sub = n.subscribe("chatter", 1000, &Listener::callback, &listener);
-// %EndTag(SUBSCRIBER)%
+  // %EndTag(SUBSCRIBER)%
 
   ros::spin();
 

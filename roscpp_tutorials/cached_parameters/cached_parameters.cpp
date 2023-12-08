@@ -33,12 +33,12 @@ int main(int argc, char** argv)
   ros::NodeHandle n;
   ros::Time begin, end;
 
-// %Tag(NH_SETCACHEDPARAM)%
+  // %Tag(NH_SETCACHEDPARAM)%
   n.setParam("my_cached_param", "r u there?");
-// %EndTag(NH_SETCACHEDPARAM)%
+  // %EndTag(NH_SETCACHEDPARAM)%
 
   {
-// %Tag(NH_GETCACHEDPARAM_SIMPLE)%
+    // %Tag(NH_GETCACHEDPARAM_SIMPLE)%
     std::string s;
     // 1st time to lookup parameter server to cache parameter.
     begin = ros::Time::now();
@@ -48,11 +48,11 @@ int main(int argc, char** argv)
     } else {
       ROS_INFO("Failed to cache ros parameter: %s\n", "my_cached_param");
     }
-// %EndTag(NH_GETCACHEDPARAM_SIMPLE)%
+    // %EndTag(NH_GETCACHEDPARAM_SIMPLE)%
   }
 
   {
-// %Tag(NH_GETCACHEDPARAM_CHECK_RETURN)%
+    // %Tag(NH_GETCACHEDPARAM_CHECK_RETURN)%
     std::string s;
     // 2nd time to lookup parameter server to cache parameter.
     begin = ros::Time::now();
@@ -62,17 +62,17 @@ int main(int argc, char** argv)
     } else {
       ROS_INFO("Failed to cache ros parameter: %s\n", "my_cached_param");
     }
-// %EndTag(NH_GETCACHEDPARAM_CHECK_RETURN)%
+    // %EndTag(NH_GETCACHEDPARAM_CHECK_RETURN)%
   }
 
-// %Tag(NH_SETCACHEDPARAM)%
+  // %Tag(NH_SETCACHEDPARAM)%
   n.setParam("my_cached_param", "hey I'm here");
-// %EndTag(NH_SETCACHEDPARAM)%
+  // %EndTag(NH_SETCACHEDPARAM)%
 
   {
-// %Tag(NH_GETCACHEDPARAM_CHECK_RETURN)%
+    // %Tag(NH_GETCACHEDPARAM_CHECK_RETURN)%
     std::string s;
-    // 3nd time to lookup parameter server to cache parameter.
+    // 3rd time to lookup parameter server to cache parameter.
     begin = ros::Time::now();
     if (n.getParamCached("my_cached_param", s)) {
       end = ros::Time::now();
@@ -80,12 +80,12 @@ int main(int argc, char** argv)
     } else {
       ROS_INFO("Failed to cache ros parameter: %s\n", "my_cached_param");
     }
-// %EndTag(NH_GETCACHEDPARAM_CHECK_RETURN)%
+    // %EndTag(NH_GETCACHEDPARAM_CHECK_RETURN)%
   }
 
-// %Tag(NH_DELETEPARAM)%
+  // %Tag(NH_DELETEPARAM)%
   n.deleteParam("my_cached_param");
-// %EndTag(NH_DELETEPARAM)%
+  // %EndTag(NH_DELETEPARAM)%
 
   return EXIT_SUCCESS;
 }

@@ -32,16 +32,16 @@
 
 // This prevents a MOC error with versions of boost >= 1.48
 #ifndef Q_MOC_RUN  // See: https://bugreports.qt-project.org/browse/QTBUG-22829
-# include <rclcpp/rclcpp.hpp>
-# include <rclcpp_action/rclcpp_action.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <rclcpp_action/rclcpp_action.hpp>
 
-# include <geometry_msgs/msg/twist.hpp>
-# include <turtlesim/action/rotate_absolute.hpp>
-# include <turtlesim/msg/color.hpp>
-# include <turtlesim/msg/pose.hpp>
-# include <turtlesim/srv/set_pen.hpp>
-# include <turtlesim/srv/teleport_absolute.hpp>
-# include <turtlesim/srv/teleport_relative.hpp>
+#include <geometry_msgs/msg/twist.hpp>
+#include <turtlesim/action/rotate_absolute.hpp>
+#include <turtlesim/msg/color.hpp>
+#include <turtlesim/msg/pose.hpp>
+#include <turtlesim/srv/set_pen.hpp>
+#include <turtlesim/srv/teleport_absolute.hpp>
+#include <turtlesim/srv/teleport_relative.hpp>
 #endif
 
 #include <QImage>
@@ -60,15 +60,19 @@ class Turtle
 public:
   using RotateAbsoluteGoalHandle = rclcpp_action::ServerGoalHandle<turtlesim::action::RotateAbsolute>;
 
-  Turtle(rclcpp::Node::SharedPtr& nh, const std::string& real_name, const QImage& turtle_image, const QPointF& pos, float orient);
+  Turtle(rclcpp::Node::SharedPtr& nh, const std::string& real_name, const QImage& turtle_image, const QPointF& pos,
+         float orient);
 
   bool update(double dt, QPainter& path_painter, const QImage& path_image, qreal canvas_width, qreal canvas_height);
-  void paint(QPainter &painter);
+  void paint(QPainter& painter);
+
 private:
   void velocityCallback(const geometry_msgs::msg::Twist::ConstSharedPtr vel);
   bool setPenCallback(const turtlesim::srv::SetPen::Request::SharedPtr, turtlesim::srv::SetPen::Response::SharedPtr);
-  bool teleportRelativeCallback(const turtlesim::srv::TeleportRelative::Request::SharedPtr, turtlesim::srv::TeleportRelative::Response::SharedPtr);
-  bool teleportAbsoluteCallback(const turtlesim::srv::TeleportAbsolute::Request::SharedPtr, turtlesim::srv::TeleportAbsolute::Response::SharedPtr);
+  bool teleportRelativeCallback(const turtlesim::srv::TeleportRelative::Request::SharedPtr,
+                                turtlesim::srv::TeleportRelative::Response::SharedPtr);
+  bool teleportAbsoluteCallback(const turtlesim::srv::TeleportAbsolute::Request::SharedPtr,
+                                turtlesim::srv::TeleportAbsolute::Response::SharedPtr);
   void rotateAbsoluteAcceptCallback(const std::shared_ptr<RotateAbsoluteGoalHandle>);
 
   void rotateImage();
@@ -107,11 +111,9 @@ private:
   struct TeleportRequest
   {
     TeleportRequest(float x, float y, qreal _theta, qreal _linear, bool _relative)
-    : pos(x, y)
-    , theta(_theta)
-    , linear(_linear)
-    , relative(_relative)
-    {}
+      : pos(x, y), theta(_theta), linear(_linear), relative(_relative)
+    {
+    }
 
     QPointF pos;
     qreal theta;
@@ -123,6 +125,6 @@ private:
 };
 typedef std::shared_ptr<Turtle> TurtlePtr;
 
-}
+}  // namespace turtlesim
 
 #endif

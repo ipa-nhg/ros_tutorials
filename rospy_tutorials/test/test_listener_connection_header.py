@@ -35,10 +35,10 @@
 
 ## Integration test for peer_subscribe_notify
 
-PKG = 'rospy_tutorials'
-NAME = 'peer_subscribe_notify_test'
+PKG = "rospy_tutorials"
+NAME = "peer_subscribe_notify_test"
 
-import sys 
+import sys
 import time
 import unittest
 
@@ -50,25 +50,26 @@ from std_msgs.msg import String
 
 class TestListenerConnectionHeader(unittest.TestCase):
     def __init__(self, *args):
-        super(TestListenerConnectionHeader, self).__init__(*args)
+        super().__init__(*args)
         self.success = False
-        
+
     def callback(self, data):
         chatter = data.data
-        if 'callerid' in data._connection_header:
-            who = data._connection_header['callerid']
+        if "callerid" in data._connection_header:
+            who = data._connection_header["callerid"]
             self.success = True
         else:
-            who = 'unknown'
-        print("I just heard %s from %s" % (chatter, who))
+            who = "unknown"
+        print(f"I just heard {chatter} from {who}")
 
     def test_notify(self):
         rospy.Subscriber("chatter", String, self.callback)
         rospy.init_node(NAME, anonymous=True)
-        timeout_t = time.time() + 10.0*1000 #10 seconds
+        timeout_t = time.time() + 10.0 * 1000  # 10 seconds
         while not rospy.is_shutdown() and not self.success and time.time() < timeout_t:
             time.sleep(0.1)
         self.assert_(self.success, str(self.success))
-        
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     rostest.rosrun(PKG, NAME, TestListenerConnectionHeader, sys.argv)

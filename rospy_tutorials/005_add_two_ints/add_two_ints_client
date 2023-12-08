@@ -34,14 +34,14 @@
 # Revision $Id$
 
 ## Simple demo of a rospy service client that calls a service to add
-## two integers. 
+## two integers.
 
 import sys
 import os
 
 import rospy
 
-# imports the AddTwoInts service 
+# imports the AddTwoInts service
 from rospy_tutorials.srv import *
 
 ## add two numbers using the add_two_ints service
@@ -56,13 +56,13 @@ def add_two_ints_client(x, y):
     # block until the add_two_ints service is available
     # you can optionally specify a timeout
     rospy.wait_for_service('add_two_ints')
-    
+
     try:
         # create a handle to the add_two_ints service
         add_two_ints = rospy.ServiceProxy('add_two_ints', AddTwoInts)
-        
+
         print "Requesting %s+%s"%(x, y)
-        
+
         # simplified style
         resp1 = add_two_ints(x, y)
 
@@ -81,7 +81,7 @@ def usage():
     return "%s [x y]"%sys.argv[0]
 
 if __name__ == "__main__":
-    
+
     argv = rospy.myargv()
     if len(argv) == 1:
         import random

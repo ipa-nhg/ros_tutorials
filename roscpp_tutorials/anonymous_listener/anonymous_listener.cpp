@@ -35,7 +35,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
   ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   // ros::init_options::AnonymousName will add a unique identifier to the end of your node name.  This allows
   // multiple of the same executable to be run without remapping each of their names with
